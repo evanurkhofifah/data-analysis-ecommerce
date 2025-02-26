@@ -5,8 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/query.png">
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-    <title>Data Analysis E-Commerce</title>
+    <!-- Menyertakan stylesheet CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/theme/eclipse.css">
     <link href="css/style.css" rel="stylesheet" />
+    <title>Data Analysis E-Commerce</title>
+    <style>
+        .CodeMirror {
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -80,12 +90,13 @@
             <h2>Implementasi</h2>
             <div class="paragraph">
                 <h3>Summary Transaksi Bulanan</h3>
-                Data yang disajikan berupa ringkasan jumlah transaksi bulanan yang dikelompokkan berdasarkan tahun dan bulan. 
-                Tujuan dari analisis ini adalah untuk mengidentifikasi tren dan pola dalam data transaksi, seperti pertumbuhan, 
-                fluktuasi musiman, dan perbedaan kinerja antar tahun.
-                Analisis ini akan membantu memahami bagaimana aktivitas bisnis berubah dari waktu ke waktu.
-            </div>
-            <pre> 
+                <p>
+                    Data yang disajikan berupa ringkasan jumlah transaksi bulanan yang dikelompokkan berdasarkan tahun dan bulan. 
+                    Tujuan dari analisis ini adalah untuk mengidentifikasi tren dan pola dalam data transaksi, seperti pertumbuhan, 
+                    fluktuasi musiman, dan perbedaan kinerja antar tahun.
+                    Analisis ini akan membantu memahami bagaimana aktivitas bisnis berubah dari waktu ke waktu.
+                </p>
+                <textarea id="code" name="code">
 SELECT EXTRACT(YEAR FROM created_at) AS years,
     EXTRACT(MONTH FROM created_at) AS month,
     COUNT(1) AS jumlah_transaksi
@@ -93,7 +104,8 @@ FROM orders
 WHERE created_at IS NOT NULL
 GROUP BY EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)
 ORDER BY years, month;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg1.png" alt="Result Query 1">
             </div>
@@ -121,26 +133,28 @@ ORDER BY years, month;
             var vizElement = divElement.getElementsByTagName('object')[0];vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
             var scriptElement = document.createElement('script');scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';vizElement.parentNode.insertBefore(scriptElement, vizElement);
             </script>
-            <br>
             <div class="paragraph">
                 <strong>Analisis:</strong><br><br>
-                Data menunjukkan tren kenaikan yang jelas dalam jumlah transaksi dari Januari 2019 hingga Mei 2020. 
-                Hal ini mengindikasikan pertumbuhan yang signifikan dalam aktivitas bisnis selama periode ini.
-                <ul>
-                    <li><strong>2019:</strong> Terdapat tren kenaikan yang konsisten dalam jumlah transaksi sepanjang tahun 2019. 
-                        Dimulai dengan 152 transaksi di bulan Januari, jumlah ini terus meningkat setiap bulannya, mencapai puncaknya di bulan Desember sebanyak 10.131 transaksi. 
-                        Pertumbuhannya semakin cepat menjelang akhir tahun, dengan lompatan signifikan dari November (7.162 transaksi) ke Desember (10.131 transaksi). 
-                        Hal ini menunjukkan pertumbuhan volume transaksi yang signifikan sepanjang tahun.</li>
-                    <li><strong>2020:</strong> Data untuk tahun 2020 hanya mencakup lima bulan pertama (Januari hingga Mei). 
-                        Meskipun jumlah transaksi pada Januari 2020 (5.062) lebih rendah daripada puncaknya pada Desember 2019, jumlah ini jauh lebih tinggi daripada bulan-bulan awal 2019.
-                        Ini juga merupakan tren yang umum terjadi pada banyak bisnis, karena belanja konsumen sering kali menurun setelah musim liburan.
-                        Tren kenaikan terus berlanjut di tahun 2020, dengan peningkatan substansial dari bulan April (7.955 transaksi) ke Mei (10.026 transaksi). 
-                        Hal ini menunjukkan bahwa tren pertumbuhan dari tahun 2019 berlanjut ke tahun 2020, setidaknya untuk data yang tersedia.</li>
-                </ul>
-                Jika membandingkan lima bulan pertama tahun 2019 dengan periode yang sama di tahun 2020, terdapat peningkatan substansial dalam volume transaksi. 
-                Hal ini semakin memperkuat pengamatan pertumbuhan yang signifikan dari tahun ke tahun.
-                Data menunjukkan volume transaksi yang sehat dan berkembang pesat untuk periode yang diamati. 
-                Analisis lebih lanjut dengan data lengkap tahun 2020 dan kemungkinan data dari tahun-tahun lainnya akan memberikan pemahaman yang lebih komprehensif tentang tren dan pola musiman.
+                <p>
+                    Data menunjukkan tren kenaikan yang jelas dalam jumlah transaksi dari Januari 2019 hingga Mei 2020. 
+                    Hal ini mengindikasikan pertumbuhan yang signifikan dalam aktivitas bisnis selama periode ini.
+                    <ul>
+                        <li><strong>2019:</strong> Terdapat tren kenaikan yang konsisten dalam jumlah transaksi sepanjang tahun 2019. 
+                            Dimulai dengan 152 transaksi di bulan Januari, jumlah ini terus meningkat setiap bulannya, mencapai puncaknya di bulan Desember sebanyak 10.131 transaksi. 
+                            Pertumbuhannya semakin cepat menjelang akhir tahun, dengan lompatan signifikan dari November (7.162 transaksi) ke Desember (10.131 transaksi). 
+                            Hal ini menunjukkan pertumbuhan volume transaksi yang signifikan sepanjang tahun.</li>
+                        <li><strong>2020:</strong> Data untuk tahun 2020 hanya mencakup lima bulan pertama (Januari hingga Mei). 
+                            Meskipun jumlah transaksi pada Januari 2020 (5.062) lebih rendah daripada puncaknya pada Desember 2019, jumlah ini jauh lebih tinggi daripada bulan-bulan awal 2019.
+                            Ini juga merupakan tren yang umum terjadi pada banyak bisnis, karena belanja konsumen sering kali menurun setelah musim liburan.
+                            Tren kenaikan terus berlanjut di tahun 2020, dengan peningkatan substansial dari bulan April (7.955 transaksi) ke Mei (10.026 transaksi). 
+                            Hal ini menunjukkan bahwa tren pertumbuhan dari tahun 2019 berlanjut ke tahun 2020, setidaknya untuk data yang tersedia.</li>
+                    </ul>
+                    Jika membandingkan lima bulan pertama tahun 2019 dengan periode yang sama di tahun 2020, terdapat peningkatan substansial dalam volume transaksi. 
+                    Hal ini semakin memperkuat pengamatan pertumbuhan yang signifikan dari tahun ke tahun.
+                    Data menunjukkan volume transaksi yang sehat dan berkembang pesat untuk periode yang diamati. 
+                    Analisis lebih lanjut dengan data lengkap tahun 2020 dan kemungkinan data dari tahun-tahun lainnya 
+                    akan memberikan pemahaman yang lebih komprehensif tentang tren dan pola musiman.
+                </p>
             </div>
         </div>
 
@@ -149,15 +163,15 @@ ORDER BY years, month;
         <div class="section">
             <div class="paragraph">
                 <h3>Pembeli dengan Total Transaksi Tertinggi</h3>
-                Pembeli yang merupakan 5 pembeli dengan total pembelian terbesar (berdasarkan total harga barang setelah diskon). Informasi ini berguna untuk:
-                <ul>
-                    <li><strong>Mengidentifikasi high-value pelanggan:</strong> Pengguna ini merupakan kontributor yang signifikan terhadap volume transaksi secara keseluruhan.</li>
-                    <li><strong>Manajemen hubungan pelanggan:</strong> Data ini dapat digunakan untuk menyesuaikan strategi pemasaran atau menawarkan promosi khusus kepada pelanggan yang berharga ini.</li>
-                    <li><strong>Analisis penjualan:</strong> Menganalisis pola transaksi dari pengguna teratas ini dapat memberikan wawasan tentang tren penjualan dan perilaku pelanggan.</li>
-                </ul>
-            </div>
+                <p>Pembeli yang merupakan 5 pembeli dengan total pembelian terbesar (berdasarkan total harga barang setelah diskon). Informasi ini berguna untuk:
+                    <ul>
+                        <li><strong>Mengidentifikasi high-value pelanggan:</strong> Pengguna ini merupakan kontributor yang signifikan terhadap volume transaksi secara keseluruhan.</li>
+                        <li><strong>Manajemen hubungan pelanggan:</strong> Data ini dapat digunakan untuk menyesuaikan strategi pemasaran atau menawarkan promosi khusus kepada pelanggan yang berharga ini.</li>
+                        <li><strong>Analisis penjualan:</strong> Menganalisis pola transaksi dari pengguna teratas ini dapat memberikan wawasan tentang tren penjualan dan perilaku pelanggan.</li>
+                    </ul>
+                </p>
 
-            <pre> 
+                <textarea id="code" name="code">
 SELECT
   o.buyer_id, 
   u.nama_user,
@@ -166,21 +180,23 @@ FROM orders o JOIN users u ON o.buyer_id = u.user_id
 GROUP BY o.buyer_id, u.nama_user
 ORDER BY total_transaksi DESC
 LIMIT 5;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg2.png" alt="Result Query 2">
             </div>
             <div class="iframe-container">
                 <iframe src="https://lookerstudio.google.com/embed/reporting/96125971-419e-4eac-bdd9-11910c4f56bd/page/tEnnC" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
-                Total pembelian terbesar dari 5 pembeli tersebut berada di kisaran 48 juta hingga 54 juta, 
-                dengan pembelian terbesar mencapai 54.102.250 oleh Jaga Puspasari. 
-                Jaga Puspasari dan R.A. Yulia Padmasari memiliki total nilai transaksi yang sedikit lebih tinggi dibandingkan dengan tiga pembeli lainnya. 
-                Nilai total transaksi pengguna 3, 4, dan 5 sangat berdekatan satu sama lain. 
-                Hal ini mengindikasikan adanya persaingan yang ketat di antara para pengguna ini dalam hal volume transaksi.
+                <strong>Analisis:</strong><br>
+                <p>
+                    Total pembelian terbesar dari 5 pembeli tersebut berada di kisaran 48 juta hingga 54 juta, 
+                    dengan pembelian terbesar mencapai 54.102.250 oleh Jaga Puspasari. 
+                    Jaga Puspasari dan R.A. Yulia Padmasari memiliki total nilai transaksi yang sedikit lebih tinggi dibandingkan dengan tiga pembeli lainnya. 
+                    Nilai total transaksi pengguna 3, 4, dan 5 sangat berdekatan satu sama lain. 
+                    Hal ini mengindikasikan adanya persaingan yang ketat di antara para pengguna ini dalam hal volume transaksi.
+                </p>
             </div>
         </div>
 
@@ -189,16 +205,17 @@ LIMIT 5;
         <div class="section">
             <div class="paragraph">
                 <h3>Pembeli Teratas berdasarkan Volume Pembelian</h3>
-                Pembeli yang tidak pernah menggunakan diskon saat membeli barang dan merupakan 5 pembeli dengan transaksi terbanyak (berdasarkan jumlah total transaksi). 
-                Hal ini mengidentifikasi pengguna yang paling sering melakukan transaksi, berapa pun nilai transaksinya. 
-                Informasi ini dapat berguna untuk:
-                <ul>
-                    <li><strong>Mengidentifikasi pembeli yang sering berbelanja:</strong> Pengguna ini secara aktif terlibat dengan platform atau layanan.</li>
-                    <li><strong>Analisis keterlibatan:</strong> Analisis keterlibatan: Data ini dapat digunakan untuk memahami perilaku pengguna dan mengidentifikasi pola frekuensi transaksi.</li>
-                    <li><strong>Program loyalitas:</strong> Informasi ini dapat digunakan untuk program loyalitas bertarget yang ditujukan untuk pembeli yang sering berbelanja.</li>
-                </ul>
-            </div>
-            <pre> 
+                <p>
+                    Pembeli yang tidak pernah menggunakan diskon saat membeli barang dan merupakan 5 pembeli dengan transaksi terbanyak (berdasarkan jumlah total transaksi). 
+                    Hal ini mengidentifikasi pengguna yang paling sering melakukan transaksi, berapa pun nilai transaksinya. 
+                    Informasi ini dapat berguna untuk:
+                    <ul>
+                        <li><strong>Mengidentifikasi pembeli yang sering berbelanja:</strong> Pengguna ini secara aktif terlibat dengan platform atau layanan.</li>
+                        <li><strong>Analisis keterlibatan:</strong> Analisis keterlibatan: Data ini dapat digunakan untuk memahami perilaku pengguna dan mengidentifikasi pola frekuensi transaksi.</li>
+                        <li><strong>Program loyalitas:</strong> Informasi ini dapat digunakan untuk program loyalitas bertarget yang ditujukan untuk pembeli yang sering berbelanja.</li>
+                    </ul>
+                </p>
+                <textarea id="code" name="code">
 SELECT 
   o.buyer_id, 
   u.nama_user, 
@@ -209,20 +226,22 @@ WHERE o.discount = 0
 GROUP BY o.buyer_id, u.nama_user 
 ORDER BY total_transaksi DESC, u.nama_user 
 LIMIT 5;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg3.png" alt="Result Query 3">
             </div>
             <div class="iframe-container">
                <iframe src="https://lookerstudio.google.com/embed/reporting/b8cf25b6-ce67-49b5-8a1a-62acfb6124fa/page/tEnnC" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
-                Yessi Wibisono memiliki jumlah transaksi tertinggi dengan 13 transaksi. 
-                Perbedaan jumlah transaksi antara pengguna teratas relatif kecil. 
-                Hal ini mengindikasikan persaingan yang ketat di antara para pengguna dalam hal frekuensi transaksi. 
-                Terdapat dua pengguna yang berada di posisi kedua dengan jumlah transaksi terbanyak dan dua pengguna yang berada di posisi ketiga.
+                <strong>Analisis:</strong><br>
+                <p>
+                    Yessi Wibisono memiliki jumlah transaksi tertinggi dengan 13 transaksi. 
+                    Perbedaan jumlah transaksi antara pengguna teratas relatif kecil. 
+                    Hal ini mengindikasikan persaingan yang ketat di antara para pengguna dalam hal frekuensi transaksi. 
+                    Terdapat dua pengguna yang berada di posisi kedua dengan jumlah transaksi terbanyak dan dua pengguna yang berada di posisi ketiga.
+                </p>
             </div>
         </div>
 
@@ -231,11 +250,13 @@ LIMIT 5;
         <div class="section">
             <div class="paragraph">
                 <h3>Pembeli dengan Frekuensi Pembelian Tertinggi</h3>
-                Pembeli dengan frekuensi pembelian terbesar yang telah bertransaksi lebih dari atau sama dengan dua juta dan lebih dari atau sama dengan lima kali. 
-                Informasi ini memberikan wawasan yang berharga tentang perilaku transaksi pelanggan. 
-                Dengan menganalisis jumlah, nilai total, dan nilai minimum transaksi, bisnis dapat lebih memahami pelanggan mereka.
-            </div>
-            <pre> 
+                <p>
+                    Pembeli dengan frekuensi pembelian terbesar yang telah bertransaksi lebih dari atau sama dengan dua juta dan lebih dari atau sama dengan lima kali. 
+                    Informasi ini memberikan wawasan yang berharga tentang perilaku transaksi pelanggan. 
+                    Dengan menganalisis jumlah, nilai total, dan nilai minimum transaksi, bisnis dapat lebih memahami pelanggan mereka.
+                </p>
+
+                <textarea id="code" name="code">
 SELECT
   nama_user AS nama_pembeli,
   COUNT(nama_user) AS banyak_transaksi,
@@ -246,32 +267,34 @@ INNER JOIN users ON buyer_id = user_id
 GROUP BY user_id, nama_user
 HAVING min(total) >= 2000000 AND count(nama_user) >= 5
 ORDER BY total_transaksi DESC;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg4.png" alt="Result Query 4">
             </div>
             <div class="iframe-container">
                 <iframe src="https://lookerstudio.google.com/embed/reporting/7f8c5cac-8c43-4b68-a8e3-36df5c2aebe6/page/tEnnC" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
-                Hasil ini memberikan wawasan yang berharga tentang perilaku transaksi pelanggan. 
-                Dengan menganalisis jumlah, nilai total, dan nilai minimum transaksi, bisnis dapat lebih memahami basis pelanggan.
-                Hasilnya menunjukkan informasi tentang transaksi pelanggan.
-                <ul>
-                    <li>Meskipun R. Tirta Nasyidah dan Martani Laksmiwati melakukan lebih banyak transaksi (masing-masing 6 transaksi) 
-                        dibandingkan dengan yang lain (masing-masing 5 transaksi), 
-                        Kalim Haryanti memiliki total nilai transaksi tertinggi. 
-                        Hal ini mengindikasikan bahwa transaksi individu Kalim Haryanti cenderung lebih besar nilainya.</li>
-                    <li>Terdapat variasi yang signifikan pada nilai transaksi minimum. 
-                        drg. Jaswadi Andriani, M.Ak dan Kalim Haryanti memiliki nilai transaksi minimum tertinggi, 
-                        yang menunjukkan bahwa mereka secara konsisten melakukan pembelian dengan nilai yang relatif tinggi.</li>
-                    <li>Potensi Segmentasi Pelanggan: 
-                        Pelanggan bernilai tinggi, Kalim Haryanti dapat diklasifikasikan sebagai pelanggan bernilai tinggi karena nilai total transaksi yang tinggi. 
-                        Pembeli yang sering berbelanja, R. Tirta Nasyidah dan Martani Laksmiwati dapat diklasifikasikan sebagai pembeli yang sering berbelanja 
-                        karena jumlah transaksi mereka yang lebih tinggi.</li>
-                </ul>
+                <strong>Analisis:</strong><br>
+                <p>
+                    Hasil ini memberikan wawasan yang berharga tentang perilaku transaksi pelanggan. 
+                    Dengan menganalisis jumlah, nilai total, dan nilai minimum transaksi, bisnis dapat lebih memahami basis pelanggan.
+                    Hasilnya menunjukkan informasi tentang transaksi pelanggan.
+                    <ul>
+                        <li>Meskipun R. Tirta Nasyidah dan Martani Laksmiwati melakukan lebih banyak transaksi (masing-masing 6 transaksi) 
+                            dibandingkan dengan yang lain (masing-masing 5 transaksi), 
+                            Kalim Haryanti memiliki total nilai transaksi tertinggi. 
+                            Hal ini mengindikasikan bahwa transaksi individu Kalim Haryanti cenderung lebih besar nilainya.</li>
+                        <li>Terdapat variasi yang signifikan pada nilai transaksi minimum. 
+                            drg. Jaswadi Andriani, M.Ak dan Kalim Haryanti memiliki nilai transaksi minimum tertinggi, 
+                            yang menunjukkan bahwa mereka secara konsisten melakukan pembelian dengan nilai yang relatif tinggi.</li>
+                        <li>Potensi Segmentasi Pelanggan: 
+                            Pelanggan bernilai tinggi, Kalim Haryanti dapat diklasifikasikan sebagai pelanggan bernilai tinggi karena nilai total transaksi yang tinggi. 
+                            Pembeli yang sering berbelanja, R. Tirta Nasyidah dan Martani Laksmiwati dapat diklasifikasikan sebagai pembeli yang sering berbelanja 
+                            karena jumlah transaksi mereka yang lebih tinggi.</li>
+                    </ul>
+                </p>
             </div>
         </div>
 
@@ -280,16 +303,17 @@ ORDER BY total_transaksi DESC;
          <div class="section">
             <div class="paragraph">
                 <h3>Pengguna yang Pernah Membeli dan Menjual Barang</h3>
-                Mengidentifikasi lima pengguna teratas yang secara aktif terlibat dalam pembelian dan penjualan, 
-                secara khusus berfokus pada mereka yang sering menjadi pembeli (lebih dari 5 kali pembelian). 
-                Informasi ini bisa sangat berharga untuk:
-                <ul>
-                    <li><strong>Memahami Perilaku Pengguna:</strong> Menganalisis pengguna yang merupakan pembeli dan penjual dapat memberikan wawasan tentang pola penggunaan platform.</li>
-                    <li><strong>Mengidentifikasi Pengguna Aktif: </strong> Pengguna ini mewakili segmen yang sangat terlibat dari basis pengguna.</li>
-                    <li><strong>Pemasaran atau Promosi Bertarget:</strong> Informasi ini dapat digunakan untuk kampanye pemasaran atau promosi yang ditargetkan yang bertujuan untuk mendorong keterlibatan lebih lanjut dalam aktivitas jual beli.</li>
-                </ul>
-            </div>
-            <pre> 
+                <p>
+                    Mengidentifikasi lima pengguna teratas yang secara aktif terlibat dalam pembelian dan penjualan, 
+                    secara khusus berfokus pada mereka yang sering menjadi pembeli (lebih dari 5 kali pembelian). 
+                    Informasi ini bisa sangat berharga untuk:
+                    <ul>
+                        <li><strong>Memahami Perilaku Pengguna:</strong> Menganalisis pengguna yang merupakan pembeli dan penjual dapat memberikan wawasan tentang pola penggunaan platform.</li>
+                        <li><strong>Mengidentifikasi Pengguna Aktif: </strong> Pengguna ini mewakili segmen yang sangat terlibat dari basis pengguna.</li>
+                        <li><strong>Pemasaran atau Promosi Bertarget:</strong> Informasi ini dapat digunakan untuk kampanye pemasaran atau promosi yang ditargetkan yang bertujuan untuk mendorong keterlibatan lebih lanjut dalam aktivitas jual beli.</li>
+                    </ul>
+                </p>
+                <textarea id="code" name="code">
 SELECT nama_user AS nama_pengguna, transaksi_beli, transaksi_jual
 FROM users
 INNER JOIN (
@@ -304,38 +328,40 @@ INNER JOIN (
 ) AS seller ON seller_id = user_id
 WHERE transaksi_beli > 5 ORDER BY transaksi_beli DESC
 LIMIT 5;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg5.png" alt="Result Query 5">
             </div>
             <div class="iframe-container">
                 <iframe src="https://lookerstudio.google.com/embed/reporting/0252aa27-43d6-4d07-99f7-28050fd1810a/page/tEnnC" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
-                Data ini penting untuk memahami perilaku pengguna yang paling aktif di platform.
-                <ul>
-                    <li>
-                        Terdapat perbedaan yang signifikan antara jumlah transaksi beli dan jual. 
-                        Jumlah transaksi jual jauh lebih besar dibandingkan jumlah transaksi beli untuk semua pengguna. 
-                        Ini menunjukkan bahwa para pengguna ini lebih aktif dalam melakukan penjualan daripada pembelian. 
-                        Hal ini bisa mengindikasikan bahwa mereka berperan sebagai penjual atau reseller yang aktif.
-                    </li>
-                    <li>
-                        Meskipun terdapat pengelompokan pada transaksi beli, jumlah transaksi jual bervariasi di antara pengguna. 
-                        Gandi Rahmawati memiliki jumlah transaksi jual tertinggi (1078), diikuti oleh Dr. Adika Kusmawati, S.Pt (1098), 
-                        Jaka Hastuti (1094), R.M. Prayogo Damanik, S.Pt (1044), dan terakhir Bahuwirya Haryanto (1032). 
-                        Menarik untuk dicatat bahwa meskipun Dr. Adika Kusmawati, S.Pt hanya melakukan 7 transaksi beli, 
-                        dia memiliki jumlah transaksi jual yang lebih tinggi dari Gandi Rahmawati yang melakukan 8 transaksi beli. 
-                        Ini menunjukkan bahwa jumlah transaksi beli tidak selalu berbanding lurus dengan jumlah transaksi jual.
-                    </li>
-                </ul>
-                Data menunjukkan bahwa pengguna yang dianalisis sangat aktif dalam melakukan transaksi, terutama dalam penjualan. 
-                Terdapat variasi dalam jumlah transaksi jual meskipun terdapat pengelompokan dalam jumlah transaksi beli. 
-                Informasi ini dapat digunakan untuk mengembangkan strategi yang lebih efektif untuk platform, 
-                khususnya dalam mendukung dan memfasilitasi aktivitas penjualan pengguna, 
-                seperti menyediakan fitur-fitur yang memudahkan penjualan, promosi untuk penjual, atau program loyalitas untuk penjual aktif.
+                <strong>Analisis:</strong><br>
+                <p>
+                    Data ini penting untuk memahami perilaku pengguna yang paling aktif di platform.
+                    <ul>
+                        <li>
+                            Terdapat perbedaan yang signifikan antara jumlah transaksi beli dan jual. 
+                            Jumlah transaksi jual jauh lebih besar dibandingkan jumlah transaksi beli untuk semua pengguna. 
+                            Ini menunjukkan bahwa para pengguna ini lebih aktif dalam melakukan penjualan daripada pembelian. 
+                            Hal ini bisa mengindikasikan bahwa mereka berperan sebagai penjual atau reseller yang aktif.
+                        </li>
+                        <li>
+                            Meskipun terdapat pengelompokan pada transaksi beli, jumlah transaksi jual bervariasi di antara pengguna. 
+                            Gandi Rahmawati memiliki jumlah transaksi jual tertinggi (1078), diikuti oleh Dr. Adika Kusmawati, S.Pt (1098), 
+                            Jaka Hastuti (1094), R.M. Prayogo Damanik, S.Pt (1044), dan terakhir Bahuwirya Haryanto (1032). 
+                            Menarik untuk dicatat bahwa meskipun Dr. Adika Kusmawati, S.Pt hanya melakukan 7 transaksi beli, 
+                            dia memiliki jumlah transaksi jual yang lebih tinggi dari Gandi Rahmawati yang melakukan 8 transaksi beli. 
+                            Ini menunjukkan bahwa jumlah transaksi beli tidak selalu berbanding lurus dengan jumlah transaksi jual.
+                        </li>
+                    </ul>
+                    Data menunjukkan bahwa pengguna yang dianalisis sangat aktif dalam melakukan transaksi, terutama dalam penjualan. 
+                    Terdapat variasi dalam jumlah transaksi jual meskipun terdapat pengelompokan dalam jumlah transaksi beli. 
+                    Informasi ini dapat digunakan untuk mengembangkan strategi yang lebih efektif untuk platform, 
+                    khususnya dalam mendukung dan memfasilitasi aktivitas penjualan pengguna, 
+                    seperti menyediakan fitur-fitur yang memudahkan penjualan, promosi untuk penjual, atau program loyalitas untuk penjual aktif.
+                </p>
             </div>
         </div>
 
@@ -344,11 +370,12 @@ LIMIT 5;
         <div class="section">
             <div class="paragraph">
                 <h3>Rata-rata Transaksi Berdasarkan Domain Email</h3>
-                Memberikan gambaran umum yang berguna tentang distribusi pembeli di berbagai domain email. 
-                Informasi ini dapat digunakan untuk memahami demografi pengguna membantu dalam memahami preferensi teknologi.
-                Dapat juga untuk analisis pemasaran dengan menganalisis efektivitas kampanye pemasaran yang menargetkan domain email yang berbeda.
-            </div>
-            <pre> 
+                <p>
+                    Memberikan gambaran umum yang berguna tentang distribusi pembeli di berbagai domain email. 
+                    Informasi ini dapat digunakan untuk memahami demografi pengguna membantu dalam memahami preferensi teknologi.
+                    Dapat juga untuk analisis pemasaran dengan menganalisis efektivitas kampanye pemasaran yang menargetkan domain email yang berbeda.
+                </p>
+                <textarea id="code" name="code">
 SELECT 
   SUBSTRING(email FROM POSITION('@' IN email) + 1) AS domain_email, 
   COUNT(u.user_id) AS jumlah_pengguna_buyer,
@@ -358,21 +385,22 @@ JOIN orders o ON u.user_id = o.buyer_id
 GROUP BY domain_email
 ORDER BY jumlah_pengguna_buyer DESC 
 LIMIT 5;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg6.png" alt="Result Query 6">
             </div>
             <div class="iframe-container">
                 <iframe src="https://lookerstudio.google.com/embed/reporting/844ea893-367a-48bd-8f7a-cd38d65c3514/page/tEnnC" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
+                <strong>Analisis:</strong><br>
                 <p>
                     Gmail, Yahoo, dan Hotmail adalah domain email yang paling populer di antara para pembeli, dengan lebih dari 12.000 pengguna. 
                     Hal ini menunjukkan bahwa ketiga domain ini adalah penyedia email yang banyak digunakan. 
                     Rata-rata transaksi untuk semua domain relatif dekat, berkisar antara sekitar 1.957.000 hingga 2.006.000. 
-                    Hal ini menunjukkan bahwa pembeli yang menggunakan domain email yang berbeda memiliki kebiasaan belanja atau nilai transaksi yang sebanding secara rata-rata.</p>
+                    Hal ini menunjukkan bahwa pembeli yang menggunakan domain email yang berbeda memiliki kebiasaan belanja atau nilai transaksi yang sebanding secara rata-rata.
+                </p>
                 <p>
                     Pengguna Hotmail memiliki rata-rata tertinggi.
                     Kueri ini memberikan gambaran umum yang berguna tentang distribusi pembeli di berbagai domain email. 
@@ -388,15 +416,16 @@ LIMIT 5;
         <div class="section">
             <div class="paragraph">
                 <h3>Produk Teratas Berdasarkan Tahun</h3>
-                Penjualan lima produk teratas untuk tahun 2019 dan 2020, menampilkan produk teratas berdasarkan total kuantitas yang terjual setiap tahun. 
-                Informasi ini dapat digunakan untuk:
-                <ul>
-                    <li><strong>Memahami Tren Produk:</strong> Mengidentifikasi produk mana yang secara konsisten populer dan mana yang mendapatkan atau kehilangan daya tarik.</li>
-                    <li><strong>Informasi Persediaan dan Produksi: </strong> Memastikan stok yang cukup untuk item yang populer dan berpotensi menyesuaikan produksi untuk item yang kurang populer.</li>
-                    <li><strong>Memperkirakan Penjualan di Masa Depan:</strong> Menggunakan data penjualan historis untuk memprediksi permintaan di masa depan.</li>
-                </ul>
-            </div>
-            <pre> 
+                <p>
+                    Penjualan lima produk teratas untuk tahun 2019 dan 2020, menampilkan produk teratas berdasarkan total kuantitas yang terjual setiap tahun. 
+                    Informasi ini dapat digunakan untuk:
+                    <ul>
+                        <li><strong>Memahami Tren Produk:</strong> Mengidentifikasi produk mana yang secara konsisten populer dan mana yang mendapatkan atau kehilangan daya tarik.</li>
+                        <li><strong>Informasi Persediaan dan Produksi: </strong> Memastikan stok yang cukup untuk item yang populer dan berpotensi menyesuaikan produksi untuk item yang kurang populer.</li>
+                        <li><strong>Memperkirakan Penjualan di Masa Depan:</strong> Menggunakan data penjualan historis untuk memprediksi permintaan di masa depan.</li>
+                    </ul>
+                </p>
+                <textarea id="code" name="code">
 WITH Orders AS (
   SELECT EXTRACT(YEAR FROM created_at) AS years,
   desc_product,
@@ -423,7 +452,8 @@ SELECT years, desc_product, total_quantity, total_price
 FROM RankedOrders
 WHERE rn <= 5
 ORDER BY years DESC, total_quantity DESC;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg7.png" alt="Result Query 7">
             </div>
@@ -452,32 +482,33 @@ ORDER BY years DESC, total_quantity DESC;
                 var vizElement = divElement.getElementsByTagName('object')[0];vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
                 var scriptElement = document.createElement('script');scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';vizElement.parentNode.insertBefore(scriptElement, vizElement);
             </script>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
-                Hasil menunjukkan data penjualan produk untuk tahun 2019 dan 2020, menampilkan 5 produk teratas berdasarkan jumlah total yang terjual setiap tahun.
-                <ul>
-                    <li>QUEEN CEFA BRACELET LEATHER secara konsisten populer, produk terlaris di tahun 2019 dan 2020. 
-                        Hal ini menunjukkan permintaan yang tinggi secara konsisten untuk produk ini.
-                    </li>
-                    <li>Produk lainnya juga menunjukkan konsistensi, "ANNA FAITH LEGGING GLOSSY", "EMBA SHORT PANT INATH TWO" dan "RIDER CELANA DEWASA SPANDEX ANTI BAKTERI R325BW" 
-                        muncul di posisi 5 besar di kedua tahun tersebut, yang menunjukkan permintaan yang stabil.
-                    </li>
-                    <li>Meskipun beberapa produk tetap berada di 5 besar, peringkat mereka berubah di antara tahun-tahun tersebut. 
-                        Sebagai contoh, "EMBA SHORT PANT INATH TWO" berada di urutan keempat pada tahun 2019, tetapi naik ke urutan kedua pada tahun 2020. 
-                        Hal ini menunjukkan adanya pergeseran dalam preferensi pelanggan atau efektivitas upaya pemasaran.
-                    </li>
-                    <li>Produk Baru pada tahun 2020: "SHEW BLOUSE MELLY" muncul di 5 besar untuk tahun 2020 tetapi tidak ada di data tahun 2019. 
-                        Hal ini dapat mengindikasikan peluncuran produk baru atau peningkatan popularitas yang signifikan pada tahun 2020.
-                    </li>
-                    <li>Membandingkan jumlah yang terjual untuk produk yang ada di kedua tahun tersebut, 
-                        secara umum terjadi peningkatan penjualan di tahun 2020 dibandingkan tahun 2019. 
-                        Hal ini dapat disebabkan oleh berbagai faktor seperti peningkatan pemasaran, perubahan tren konsumen, atau pertumbuhan pasar secara keseluruhan.
-                    </li>
-                </ul>
-                Hasil ini memberikan perbandingan produk terlaris dari tahun ke tahun. 
-                Analisis ini mengungkapkan produk berkinerja terbaik yang konsisten, pergeseran peringkat produk, 
-                kemunculan produk baru yang populer, dan peningkatan penjualan secara keseluruhan pada tahun 2020.
+                <strong>Analisis:</strong><br>
+                <p>
+                    Hasil menunjukkan data penjualan produk untuk tahun 2019 dan 2020, menampilkan 5 produk teratas berdasarkan jumlah total yang terjual setiap tahun.
+                    <ul>
+                        <li>QUEEN CEFA BRACELET LEATHER secara konsisten populer, produk terlaris di tahun 2019 dan 2020. 
+                            Hal ini menunjukkan permintaan yang tinggi secara konsisten untuk produk ini.
+                        </li>
+                        <li>Produk lainnya juga menunjukkan konsistensi, "ANNA FAITH LEGGING GLOSSY", "EMBA SHORT PANT INATH TWO" dan "RIDER CELANA DEWASA SPANDEX ANTI BAKTERI R325BW" 
+                            muncul di posisi 5 besar di kedua tahun tersebut, yang menunjukkan permintaan yang stabil.
+                        </li>
+                        <li>Meskipun beberapa produk tetap berada di 5 besar, peringkat mereka berubah di antara tahun-tahun tersebut. 
+                            Sebagai contoh, "EMBA SHORT PANT INATH TWO" berada di urutan keempat pada tahun 2019, tetapi naik ke urutan kedua pada tahun 2020. 
+                            Hal ini menunjukkan adanya pergeseran dalam preferensi pelanggan atau efektivitas upaya pemasaran.
+                        </li>
+                        <li>Produk Baru pada tahun 2020: "SHEW BLOUSE MELLY" muncul di 5 besar untuk tahun 2020 tetapi tidak ada di data tahun 2019. 
+                            Hal ini dapat mengindikasikan peluncuran produk baru atau peningkatan popularitas yang signifikan pada tahun 2020.
+                        </li>
+                        <li>Membandingkan jumlah yang terjual untuk produk yang ada di kedua tahun tersebut, 
+                            secara umum terjadi peningkatan penjualan di tahun 2020 dibandingkan tahun 2019. 
+                            Hal ini dapat disebabkan oleh berbagai faktor seperti peningkatan pemasaran, perubahan tren konsumen, atau pertumbuhan pasar secara keseluruhan.
+                        </li>
+                    </ul>
+                    Hasil ini memberikan perbandingan produk terlaris dari tahun ke tahun. 
+                    Analisis ini mengungkapkan produk berkinerja terbaik yang konsisten, pergeseran peringkat produk, 
+                    kemunculan produk baru yang populer, dan peningkatan penjualan secara keseluruhan pada tahun 2020.
+                </p>
             </div>
         </div>
 
@@ -486,15 +517,16 @@ ORDER BY years DESC, total_quantity DESC;
         <div class="section">
             <div class="paragraph">
                 <h3>Kategori Produk Teratas Berdasarkan Tahun</h3>
-                Penjualan lima kategori produk teratas berdasarkan total kuantitas yang terjual untuk tahun 2019 dan 2020. Informasi ini dapat digunakan untuk:
-                <ul>
-                    <li><strong>Perencanaan Inventori:</strong> Memprioritaskan manajemen stok untuk kategori dengan permintaan tinggi secara konsisten.</li>
-                    <li><strong>Fokus Pemasaran: </strong> Mengalokasikan sumber daya pemasaran secara efektif dengan berfokus pada kategori berkinerja tinggi.</li>
-                    <li><strong>Analisis Tren Pasar:</strong> Memahami preferensi konsumen dan mengidentifikasi kategori yang sedang tumbuh atau menurun.</li>
-                    <li><strong>Penilaian Pertumbuhan Bisnis:</strong> Mengevaluasi pertumbuhan bisnis secara keseluruhan berdasarkan peningkatan volume penjualan di seluruh kategori.</li>
-                </ul>
-            </div>
-            <pre> 
+                <p>
+                    Penjualan lima kategori produk teratas berdasarkan total kuantitas yang terjual untuk tahun 2019 dan 2020. Informasi ini dapat digunakan untuk:
+                    <ul>
+                        <li><strong>Perencanaan Inventori:</strong> Memprioritaskan manajemen stok untuk kategori dengan permintaan tinggi secara konsisten.</li>
+                        <li><strong>Fokus Pemasaran: </strong> Mengalokasikan sumber daya pemasaran secara efektif dengan berfokus pada kategori berkinerja tinggi.</li>
+                        <li><strong>Analisis Tren Pasar:</strong> Memahami preferensi konsumen dan mengidentifikasi kategori yang sedang tumbuh atau menurun.</li>
+                        <li><strong>Penilaian Pertumbuhan Bisnis:</strong> Mengevaluasi pertumbuhan bisnis secara keseluruhan berdasarkan peningkatan volume penjualan di seluruh kategori.</li>
+                    </ul>
+                </p>
+                <textarea id="code" name="code">
 WITH Orders AS (
   SELECT EXTRACT(YEAR FROM created_at) AS years,
   category,
@@ -518,7 +550,8 @@ SELECT years, category, total_quantity, total_price
 FROM RankedOrders
 WHERE rn <= 5
 ORDER BY years DESC, total_quantity DESC;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg8.png" alt="Result Query 8">
             </div>
@@ -547,29 +580,29 @@ ORDER BY years DESC, total_quantity DESC;
                 var vizElement = divElement.getElementsByTagName('object')[0];vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
                 var scriptElement = document.createElement('script');scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';vizElement.parentNode.insertBefore(scriptElement, vizElement);
             </script>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
-                Hasil menunjukkan data penjualan produk untuk tahun 2019 dan 2020, menampilkan 5 kategori produk teratas berdasarkan jumlah total yang terjual setiap tahun.
-                <ul>
-                    <li>"Kebersihan Diri" adalah kategori terlaris di tahun 2019 dan 2020, dengan keunggulan yang signifikan atas kategori lainnya. 
-                        Hal ini menunjukkan permintaan yang kuat dan konsisten untuk produk perawatan pribadi.
-                    </li>
-                    <li>
-                        Lima kategori yang sama muncul di 5 besar untuk kedua tahun tersebut, menunjukkan permintaan konsumen yang relatif stabil di seluruh kategori ini.
-                    </li>
-                    <li>Pertumbuhan yang signifikan pada tahun 2020, ada peningkatan yang substansial dalam total kuantitas untuk semua kategori pada tahun 2020 dibandingkan dengan tahun 2019. 
-                        Hal ini terutama terlihat pada kategori "Kebersihan Diri", yang mengalami peningkatan lebih dari 358.000 unit yang terjual. 
-                        Pertumbuhan keseluruhan ini dapat dikaitkan dengan berbagai faktor, termasuk perubahan perilaku konsumen, peningkatan upaya pemasaran, atau perluasan pasar.
-                    </li>
-                    <li>Peringkat kategori sebagian besar tetap konsisten antara dua tahun, 
-                        dengan "Fresh Food", "Pakaian Pria", "Vitamin", dan "Pakaian Wanita" secara konsisten menempati posisi ke-2 hingga ke-5, 
-                        meskipun dengan volume penjualan yang meningkat pada tahun 2020.
-                    </li>
-                </ul>
-                Analisis ini memberikan perbandingan dari tahun ke tahun dari kategori produk terlaris berdasarkan kuantitas. 
-                Temuan utamanya adalah dominasi dan pertumbuhan yang signifikan dari kategori "Kebersihan Diri", 
-                keberadaan 5 kategori teratas yang sama secara konsisten, dan peningkatan volume penjualan secara keseluruhan di semua kategori pada tahun 2020.
+                <strong>Analisis:</strong><br>
+                <p>Hasil menunjukkan data penjualan produk untuk tahun 2019 dan 2020, menampilkan 5 kategori produk teratas berdasarkan jumlah total yang terjual setiap tahun.
+                    <ul>
+                        <li>"Kebersihan Diri" adalah kategori terlaris di tahun 2019 dan 2020, dengan keunggulan yang signifikan atas kategori lainnya. 
+                            Hal ini menunjukkan permintaan yang kuat dan konsisten untuk produk perawatan pribadi.
+                        </li>
+                        <li>
+                            Lima kategori yang sama muncul di 5 besar untuk kedua tahun tersebut, menunjukkan permintaan konsumen yang relatif stabil di seluruh kategori ini.
+                        </li>
+                        <li>Pertumbuhan yang signifikan pada tahun 2020, ada peningkatan yang substansial dalam total kuantitas untuk semua kategori pada tahun 2020 dibandingkan dengan tahun 2019. 
+                            Hal ini terutama terlihat pada kategori "Kebersihan Diri", yang mengalami peningkatan lebih dari 358.000 unit yang terjual. 
+                            Pertumbuhan keseluruhan ini dapat dikaitkan dengan berbagai faktor, termasuk perubahan perilaku konsumen, peningkatan upaya pemasaran, atau perluasan pasar.
+                        </li>
+                        <li>Peringkat kategori sebagian besar tetap konsisten antara dua tahun, 
+                            dengan "Fresh Food", "Pakaian Pria", "Vitamin", dan "Pakaian Wanita" secara konsisten menempati posisi ke-2 hingga ke-5, 
+                            meskipun dengan volume penjualan yang meningkat pada tahun 2020.
+                        </li>
+                    </ul>
+                    Analisis ini memberikan perbandingan dari tahun ke tahun dari kategori produk terlaris berdasarkan kuantitas. 
+                    Temuan utamanya adalah dominasi dan pertumbuhan yang signifikan dari kategori "Kebersihan Diri", 
+                    keberadaan 5 kategori teratas yang sama secara konsisten, dan peningkatan volume penjualan secara keseluruhan di semua kategori pada tahun 2020.
+                </p>
             </div>
         </div>
 
@@ -578,16 +611,17 @@ ORDER BY years DESC, total_quantity DESC;
         <div class="section">
             <div class="paragraph">
                 <h3>Transaksi Terbesar Pembeli Berdasarkan Tahun</h3>
-                Lima pembeli teratas dengan total nilai transaksi tertinggi untuk setiap tahun (2019 dan 2020), 
-                dengan total nilai transaksi minimum 20.000.000 per tahun. 
-                Informasi ini sangat berharga untuk:
-                <ul>
-                    <li><strong>Customer Relationship Management (CRM):</strong> Mengidentifikasi pelanggan bernilai tinggi untuk upaya pemasaran yang ditargetkan, program loyalitas, atau layanan yang dipersonalisasi.</li>
-                    <li><strong>Analisis Penjualan:</strong> Memahami pola belanja dan mengidentifikasi segmen pelanggan utama.</li>
-                    <li><strong>Strategi Pemasaran:</strong> Mengembangkan strategi untuk mempertahankan dan melibatkan pelanggan bernilai tinggi.</li>
-                </ul>
-            </div>
-            <pre> 
+                <p>
+                    Lima pembeli teratas dengan total nilai transaksi tertinggi untuk setiap tahun (2019 dan 2020), 
+                    dengan total nilai transaksi minimum 20.000.000 per tahun. 
+                    Informasi ini sangat berharga untuk:
+                    <ul>
+                        <li><strong>Customer Relationship Management (CRM):</strong> Mengidentifikasi pelanggan bernilai tinggi untuk upaya pemasaran yang ditargetkan, program loyalitas, atau layanan yang dipersonalisasi.</li>
+                        <li><strong>Analisis Penjualan:</strong> Memahami pola belanja dan mengidentifikasi segmen pelanggan utama.</li>
+                        <li><strong>Strategi Pemasaran:</strong> Mengembangkan strategi untuk mempertahankan dan melibatkan pelanggan bernilai tinggi.</li>
+                    </ul>
+                </p>
+                <textarea id="code" name="code">
 WITH Orders AS (
 	SELECT EXTRACT(YEAR FROM created_at::DATE) AS years,
   nama_user AS nama_pembeli,
@@ -609,16 +643,16 @@ SELECT years, nama_pembeli, total_transaksi
 FROM RankedOrders 
 WHERE rn <= 5
 ORDER BY years DESC, total_transaksi DESC;
-            </pre>
+                </textarea>
+            </div>
             <div class="image-container">
                 <img src="img/pg9.png" alt="Result Query 9">
             </div>
             <div class="iframe-container">
                 <iframe src="https://lookerstudio.google.com/embed/reporting/ea802923-37d5-4990-a4b9-befd3fa97db7/page/tEnnC" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <br>
             <div class="paragraph">
-                <strong>Analisis:</strong><br><br>
+                <strong>Analisis:</strong><br>
                 <p>
                     Analisis ini mengidentifikasi pembeli dengan pembelanjaan tertinggi untuk setiap tahun, 
                     menyoroti mereka yang memberikan kontribusi terbesar terhadap volume transaksi. 
@@ -639,5 +673,24 @@ ORDER BY years DESC, total_transaksi DESC;
     <footer class="footer">
         <p>&copy; 2024 Eva Nurkhofifah.</p>
     </footer>
+
+    <!-- Menyertakan skrip CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/sql/sql.min.js"></script>
+    
+    <script>
+        // Pilih semua <textarea> dengan ID "code"
+        var editors = document.querySelectorAll("#code");
+
+        // Menyusun editor CodeMirror
+        editors.forEach(function(textarea) {
+            var editor = CodeMirror.fromTextArea(textarea, {
+                mode: "sql",           // Bahasa pemrograman Python
+                lineNumbers: false,        // Menampilkan nomor baris
+                theme: "eclipse",         // Tema editor
+                readOnly: true            // Membuat editor hanya baca
+            });
+        });
+    </script>
 </body>
 </html>
